@@ -1,0 +1,33 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf500
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\csgray\c0;}
+\margl1440\margr1440\vieww22940\viewh13880\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 # navigate to the humann2 directoy\
+\
+cd ~/Tutorial/humann2\
+\
+#make a directory called input_mgx_mtx\
+\
+mkdir input_mgx_mtx\
+\
+#get the data into the terminal\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs22 \cf2 \CocoaLigature0 wget https://bitbucket.org/biobakery/multi-omic/downloads/gut_mtx_20k.fastq\
+wget https://bitbucket.org/biobakery/multi-omic/downloads/gut_mgx_20k.fastq\
+\
+\
+#Run HUMAnN2 on wgx file 1st\
+~/Tutorials/humann2$ humann2 --input input_mgx_mtx/gut_mgx_20k.fastq --output output_mgx\
+\
+#Then run HUMAnN2 with a flag to let the tool know that you have paired mgx/mtx data (\'97taxonomic-profile) this tells humann to use the bugs from the mgx data to speed up the #analysis\
+humann2 --input input_mgx_mtx/gut_mtx_20k.fastq --output output_mtx --taxonomic-profile output_mgx/gut_mgx_20k_humann2_temp/gut_mgx_20k_metaphlan_bugs_list.tsv \
+\
+#Do the RNA/DNA normalization \
+humann2_rna_dna_norm --input_dna output_mgx/gut_mgx_20k_genefamilies.tsv --input_rna output_mtx/gut_mtx_20k_genefamilies.tsv --output_basename output_mtx/gut_mgx_mtx\
+\
+}
